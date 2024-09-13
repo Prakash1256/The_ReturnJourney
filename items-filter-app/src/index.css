@@ -9,10 +9,10 @@
   padding: 10px; 
   font-size: 2.5rem; 
   font-weight: bold; 
-  color:#2c3e50; 
+  color:rgb(21, 111, 232);
   line-height: 1.2; 
   font-family: 'Merriweather', serif;
-
+  
 
 
 }
@@ -42,18 +42,31 @@
   margin-right: auto;
   padding: 20px;
   text-align: center;
-  border: 1px solid #ddd; /* Light border for card effect */
-  border-radius: 12px; /* Slightly more rounded corners */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* More pronounced shadow for depth */
-  background-color: #fff; /* White background for contrast */
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effect */
-  max-width: 600px; /* Define a max-width for the medium card */
-  width: 100%; /* Ensure the card takes full width up to max-width */
+  border: 1px solid #ddd; 
+  border-radius: 12px; 
+  box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px; /* More pronounced shadow for depth */
+  background-color: #fff; 
+   
+  max-width: 700px; 
+  width: 100%; 
+  height: 100vh; 
+  box-sizing: border-box; 
+}
+.item-list li {
+  margin-bottom: 15px;
+  padding: 5px; 
+  border: 1px solid #ddd; 
+  border-radius: 8px; 
+  background-color: #f4f4f4;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; 
 }
 
-.item-list-container:hover {
-  transform: scale(1.02); /* Slightly scale up on hover */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Enhance shadow on hover */
+.item-list li:hover {
+  background: linear-gradient(135deg, #f6d365 0%, #fda085 100%); 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+  transform: translateY(-2px); 
+  color: #fff; 
 }
 
 ul.item-list {
@@ -62,26 +75,15 @@ ul.item-list {
   margin: 0;
 }
 
-.item-list li {
-  margin-bottom: 15px;
-  padding: 15px; /* Increase padding for better spacing */
-  border: 1px solid #ddd; /* Light border for list items */
-  border-radius: 8px; /* More rounded corners for list items */
-  background-color: #f4f4f4; /* Light grey background for list items */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow for list items */
-  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effect */
-}
+
 
 .item-list li:hover {
-  background-color: #e0e0e0; /* Slightly darker background on hover */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+  background-color: #e0e0e0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-
-
-
 .pagination-controls {
-  display: inline-flex; /* Use inline-flex to align the buttons in the center */
+  display: inline-flex; 
   justify-content: center;
   align-items: center;
   margin-top: 20px;
