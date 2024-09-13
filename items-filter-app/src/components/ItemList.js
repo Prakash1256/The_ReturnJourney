@@ -34,14 +34,20 @@ const ItemList = () => {
     dispatch(setCurrentPage(1));
   }, [searchTerm, dispatch]);
 
-  // Update search term
+  // Update search term but ignore space key
   const handleSearch = (e) => {
-    dispatch(setSearchTerm(e.target.value));
+    const input = e.target.value;
+    if (e.nativeEvent.data === " ") {
+      // Prevent search operation if space key is pressed
+      e.preventDefault();
+      return;
+    }
+    dispatch(setSearchTerm(input));
   };
 
   return (
     <div className="item-list-container">
-    <h1 className="title">ItemList</h1>
+      <h1 className="title">ItemList</h1>
       <input
         type="text"
         placeholder="Search items..."
@@ -62,7 +68,7 @@ const ItemList = () => {
                 <li key={item.id}>{item.name}</li>
               ))
             ) : (
-              <li style={{fontWeight:"bold"}}>Item is not present search another item 😊..</li>
+              <li style={{ fontWeight: "bold" }}>Item is not present, search another item 😊..</li>
             )}
           </ul>
 
