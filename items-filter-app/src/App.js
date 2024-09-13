@@ -20,7 +20,7 @@ const App = () => {
 
   return (
     <div>
-      <h1 className="title">ItemList</h1>
+      
       <ItemList />
     </div>
   );

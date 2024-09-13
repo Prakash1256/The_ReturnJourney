@@ -41,6 +41,7 @@ const ItemList = () => {
 
   return (
     <div className="item-list-container">
+    <h1 className="title">ItemList</h1>
       <input
         type="text"
         placeholder="Search items..."

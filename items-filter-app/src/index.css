@@ -38,19 +38,47 @@
 
 
 .item-list-container {
-  margin-left: 10px;
+  margin-left: auto;
+  margin-right: auto;
   padding: 20px;
-  text-align: center; /* This ensures all child elements inside are centered */
+  text-align: center;
+  border: 1px solid #ddd; /* Light border for card effect */
+  border-radius: 12px; /* Slightly more rounded corners */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* More pronounced shadow for depth */
+  background-color: #fff; /* White background for contrast */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effect */
+  max-width: 600px; /* Define a max-width for the medium card */
+  width: 100%; /* Ensure the card takes full width up to max-width */
+}
+
+.item-list-container:hover {
+  transform: scale(1.02); /* Slightly scale up on hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Enhance shadow on hover */
 }
 
 ul.item-list {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 .item-list li {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  padding: 15px; /* Increase padding for better spacing */
+  border: 1px solid #ddd; /* Light border for list items */
+  border-radius: 8px; /* More rounded corners for list items */
+  background-color: #f4f4f4; /* Light grey background for list items */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow for list items */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effect */
 }
+
+.item-list li:hover {
+  background-color: #e0e0e0; /* Slightly darker background on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+}
+
+
+
 
 .pagination-controls {
   display: inline-flex; /* Use inline-flex to align the buttons in the center */
