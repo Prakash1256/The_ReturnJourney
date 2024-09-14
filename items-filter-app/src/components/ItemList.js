@@ -1,6 +1,68 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, memo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setCurrentPage, setSearchTerm } from "../features/itemsSlice";
+
+// Memoized Search Input component
+const SearchBar = memo(({ searchTerm, handleSearch }) => {
+  return (
+    <input
+      type="text"
+      placeholder="Search items..."
+      value={searchTerm}
+      onChange={handleSearch}
+      className="search-bar"
+      aria-label="Search items"
+    />
+  );
+});
+
+// Memoized Item List component
+const ItemListDisplay = memo(({ paginatedItems }) => {
+  return (
+    <ul className="item-list">
+      {paginatedItems.length > 0 ? (
+        paginatedItems.map((item) => <li key={item.id}>{item.name}</li>)
+      ) : (
+        <li style={{ fontWeight: "bold" }}>
+          Item is not present, search another item 😊..
+        </li>
+      )}
+    </ul>
+  );
+});
+
+// Memoized Pagination Controls
+const PaginationControls = memo(
+  ({ currentPage, totalPages, handlePageChange }) => {
+    return (
+      <div className="pagination-controls">
+        <button
+          className={`pagination-button ${
+            currentPage === 1 ? "disabled" : ""
+          }`}
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+          aria-label="Previous page"
+        >
+          Previous
+        </button>
+
+        <span className="pagination-page-number">{currentPage}</span>
+
+        <button
+          className={`pagination-button ${
+            currentPage === totalPages ? "disabled" : ""
+          }`}
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+          aria-label="Next page"
+        >
+          Next
+        </button>
+      </div>
+    );
+  }
+);
 
 const ItemList = () => {
   // Extract state from Redux store
@@ -20,6 +82,7 @@ const ItemList = () => {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const paginatedItems = filteredItems.slice(startIndex, endIndex);
+  const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
 
   // Handle page changes
   const handlePageChange = useCallback(
@@ -35,65 +98,41 @@ const ItemList = () => {
   }, [searchTerm, dispatch]);
 
   // Update search term but ignore space key
-  const handleSearch = (e) => {
-    const input = e.target.value;
-    if (e.nativeEvent.data === " ") {
-      // Prevent search operation if space key is pressed
-      e.preventDefault();
-      return;
-    }
-    dispatch(setSearchTerm(input));
-  };
+  const handleSearch = useCallback(
+    (e) => {
+      const input = e.target.value;
+      if (e.nativeEvent.data === " ") {
+        // Prevent search operation if space key is pressed
+        e.preventDefault();
+        return;
+      }
+      dispatch(setSearchTerm(input));
+    },
+    [dispatch]
+  );
 
   return (
     <div className="item-list-container">
       <h1 className="title">ItemList</h1>
-      <input
-        type="text"
-        placeholder="Search items..."
-        value={searchTerm}
-        onChange={handleSearch}
-        className="search-bar"
-        aria-label="Search items"
-      />
+
+      {/* Memoized Search Bar */}
+      <SearchBar searchTerm={searchTerm} handleSearch={handleSearch} />
+
       {isLoading ? (
         <p>Loading...</p>
       ) : error ? (
         <p>Error: {error}</p>
       ) : (
         <>
-          <ul className="item-list">
-            {paginatedItems.length > 0 ? (
-              paginatedItems.map((item) => (
-                <li key={item.id}>{item.name}</li>
-              ))
-            ) : (
-              <li style={{ fontWeight: "bold" }}>Item is not present, search another item 😊..</li>
-            )}
-          </ul>
+          {/* Memoized Item List */}
+          <ItemListDisplay paginatedItems={paginatedItems} />
 
-          {/* Pagination controls */}
-          <div className="pagination-controls">
-            <button
-              className={`pagination-button ${currentPage === 1 ? "disabled" : ""}`}
-              onClick={() => handlePageChange(currentPage - 1)}
-              disabled={currentPage === 1}
-              aria-label="Previous page"
-            >
-              Previous
-            </button>
-
-            <span className="pagination-page-number">{currentPage}</span>
-
-            <button
-              className={`pagination-button ${currentPage === Math.ceil(filteredItems.length / itemsPerPage) ? "disabled" : ""}`}
-              onClick={() => handlePageChange(currentPage + 1)}
-              disabled={currentPage === Math.ceil(filteredItems.length / itemsPerPage)}
-              aria-label="Next page"
-            >
-              Next
-            </button>
-          </div>
+          {/* Memoized Pagination Controls */}
+          <PaginationControls
+            currentPage={currentPage}
+            totalPages={totalPages}
+            handlePageChange={handlePageChange}
+          />
         </>
       )}
     </div>

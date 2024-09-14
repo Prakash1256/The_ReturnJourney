@@ -1,25 +1,35 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createSlice } from '@reduxjs/toolkit';
 
-// Initial state
+// Initial state with static data
 const initialState = {
-  items: [],
+  items: [
+    { id: 1, name: 'Apple' },
+    { id: 2, name: 'Banana' },
+    { id: 3, name: 'Orange' },
+    { id: 4, name: 'Grapes' },
+    { id: 5, name: 'Mango' },
+    { id: 6, name: 'Pineapple' },
+    { id: 7, name: 'Strawberry' },
+    { id: 8, name: 'Blueberry' },
+    { id: 9, name: 'Watermelon' },
+    { id: 10, name: 'Peach' },
+    { id: 11, name: 'Kiwi' },
+    { id: 12, name: 'Plum' },
+    { id: 13, name: 'Cherry' },
+    { id: 14, name: 'Avocado' },
+    { id: 15, name: 'Pomegranate' },
+    { id: 16, name: 'Raspberry' },
+    { id: 17, name: 'Blackberry' },
+    { id: 18, name: 'Fig' },
+    { id: 19, name: 'Papaya' },
+    { id: 20, name: 'Lychee' },
+  ],
   searchTerm: '',
   isLoading: false,
   error: null,
   currentPage: 1,
   itemsPerPage: 10,
 };
-
-// Async thunk to fetch data from JSON server
-export const fetchItems = createAsyncThunk('items/fetchItems', async () => {
-  try {
-    const response = await axios.get('http://localhost:8050/items');
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
-});
 
 const itemsSlice = createSlice({
   name: 'items',
@@ -31,21 +41,6 @@ const itemsSlice = createSlice({
     setCurrentPage: (state, action) => {
       state.currentPage = action.payload;
     },
-  },
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchItems.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(fetchItems.fulfilled, (state, action) => {
-        state.items = action.payload;
-        state.isLoading = false;
-      })
-      .addCase(fetchItems.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.error.message;
-      });
   },
 });
 
